@@ -9,22 +9,28 @@
             Spacing="25"
             HorizontalOptions="Center">
 
-            <Label Text="Covertitore Franchi - Euro"
+            <Label Text="Converter CHF - EUR"
                    FontSize="24"
                    FontAttributes="Bold"
-                   HorizontalOptions="Center" />
-            <Entry x:Name="entConversione"
-                   Placeholder="Inserisci importo CHF"
+                   HorizontalTextAlignment="Center" />
+            <Entry x:Name="entConvertion"
+                   Placeholder="Insert value in CHF"
                    Keyboard="Numeric"/>
-            <Button x:Name="btnConverti"
-                    Text="Converti in Euro"
+            <Button x:Name="btnConvert"
+                    Text="Convert to EUR"
                     TextColor="White"
-                    Clicked="btnConverti_Clicked"/>
-            <Label x:Name="lblRisultato"
-                   Text="Risultato: "
+                    BackgroundColor="DodgerBlue"
+                    Clicked="btnConvert_Clicked"/>
+            <Label x:Name="lblResult"
+                   Text="Result: "
                    FontSize="20"
                    HorizontalOptions="Center"
                    Margin="0,20,0,0"/>
+            <Button x:Name="btnReset"
+                    Text="Reset"
+                    TextColor="White"
+                    BackgroundColor="IndianRed"
+                    Clicked="btnReset_Clicked"/>
 
         </VerticalStackLayout>
     </ScrollView>
