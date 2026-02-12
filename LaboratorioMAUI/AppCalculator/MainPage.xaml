@@ -9,6 +9,17 @@
             Spacing="25"
             HorizontalOptions="Center">
 
+            <Label x:Name="LblTitolo"
+                   Text="Risolutore Equazioni"
+                   HorizontalTextAlignment="Center"
+                   FontSize="30"
+                   TextColor="DodgerBlue"/>
+            <Label x:Name="LblFormula"
+                   Text="Data l'equazione: ax² + bx + c = 0"
+                   HorizontalTextAlignment="Center"
+                   FontSize="16"
+                   TextColor="Grey"/>
+
             <Grid RowSpacing="15" ColumnSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -63,14 +74,19 @@
                     BackgroundColor="DodgerBlue"
                     HeightRequest="40"
                     Clicked="CalculateRadici"/>
-            <Label x:Name="LblRisultato"
-                   Text="Risultato: "
-                   Padding="10,0,0,0"
-                   VerticalTextAlignment="Center"
-                   FontSize="16"
-                   TextColor="White"
-                   BackgroundColor="PaleVioletRed"
-                   HeightRequest="40"/>
+            <Border StrokeThickness="0"
+                    BackgroundColor="LightGrey"
+                    StrokeShape="RoundRectangle 10"
+                    HeightRequest="40">
+
+                <Label x:Name="LblRisultato"
+                       Text="Risultato: "
+                       Padding="10,0,0,0"
+                       VerticalTextAlignment="Center"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="Black"/>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>

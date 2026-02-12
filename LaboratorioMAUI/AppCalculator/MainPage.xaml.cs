@@ -18,15 +18,15 @@
         {
             if (string.IsNullOrWhiteSpace(EntA.Text) || string.IsNullOrWhiteSpace(EntB.Text) || string.IsNullOrWhiteSpace(EntC.Text))
             {
-                LblRisultato.Text = "Inserisci tutti coefficienti!";
-                LblRisultato.TextColor = Colors.Orange;
+                LblRisultato.Text = "Coefficienti mancanti";
+                LblRisultato.TextColor = Colors.DarkGoldenrod;
                 return;
             }
 
             if (EntA.Text.Equals("0"))
             {
-                LblRisultato.Text = "Coefficiente A non può essere 0!";
-                LblRisultato.TextColor = Colors.Orange;
+                LblRisultato.Text = "Coefficiente A non può essere 0";
+                LblRisultato.TextColor = Colors.DarkGoldenrod;
                 return;
             }
 
@@ -37,18 +37,22 @@
 
             if (delta > 0)
             {
-                LblRisultato.TextColor = Colors.Green;
+                double solution1 = ((-1 * b) + Math.Sqrt(delta)) / (2 * a);
+                double solution2 = ((-1 * b) - Math.Sqrt(delta)) / (2 * a);
+                LblRisultato.TextColor = Colors.DarkGreen;
+                LblRisultato.Text = "Risultato: " + solution1.ToString("F") + "; " + solution2.ToString("F");
             }
             else if (delta == 0)
             {
-                LblRisultato.TextColor = Colors.Blue;
+                double solution1 = (-1 * b) / (2 * a);
+                LblRisultato.TextColor = Colors.DarkBlue;
+                LblRisultato.Text = "Risultato: " + solution1.ToString("F");
             }
             else
             {
-                LblRisultato.TextColor= Colors.Red;
+                LblRisultato.TextColor = Colors.DarkRed;
+                LblRisultato.Text = "Risultato: Impossibile";
             }
-
-            LblRisultato.Text = "Risultato: " + a;
             SemanticScreenReader.Announce(LblRisultato.Text);
         }
     }
