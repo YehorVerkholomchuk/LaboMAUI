@@ -12,10 +12,7 @@ namespace AppQuiz
             InitializeComponent();
             _questions.Add(new TrueFalseQuestion("Il C# è un linguaggio a oggetti?", 10, true));
             _questions.Add(new TrueFalseQuestion("Python è un linguaggio compilato?", 10, false));
-            _questions.Add(new TrueFalseQuestion("Maruca te lo s*ca?", 1, true));
-            _questions.Add(new TrueFalseQuestion("CPT ci sta?", 1, false));
             _questions.Add(new TrueFalseQuestion("√2 = 1.41421356236 ?", 20, false));
-            _questions.Add(new TrueFalseQuestion("Malakas?", -1000, true));
             ShowQuestion();
         }
         private void ShowQuestion()
