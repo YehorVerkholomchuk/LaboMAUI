@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Graphics.Text;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppQuiz.Models
 {
-    public class TrueFalseQuestion : QuestionBase
+    public class OpenQuestion : QuestionBase
     {
         private string _correctAnswer;
 
@@ -17,7 +16,7 @@ namespace AppQuiz.Models
             set { _correctAnswer = value; }
         }
 
-        public TrueFalseQuestion(string text, int points, string correctAnswer)
+        public OpenQuestion(string text, int points, string correctAnswer)
             : base(text, points)
         {
             _correctAnswer = correctAnswer;
@@ -25,7 +24,7 @@ namespace AppQuiz.Models
 
         public override bool CheckAnswer(string userAnswer)
         {
-            return bool.Parse(userAnswer.ToString()) == bool.Parse(_correctAnswer.ToString());
+            return userAnswer.Equals(_correctAnswer);
         }
     }
 }

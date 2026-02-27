@@ -45,6 +45,8 @@
                         BackgroundColor="#c0392b"
                         CornerRadius="10" />
             </HorizontalStackLayout>
+            <Entry
+                />
         </VerticalStackLayout>
     </ScrollView>
 

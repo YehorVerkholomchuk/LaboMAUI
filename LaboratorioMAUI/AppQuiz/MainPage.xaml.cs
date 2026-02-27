@@ -7,12 +7,13 @@ namespace AppQuiz
         private List<QuestionBase> _questions = new List<QuestionBase>();
         private int _currentIndex = 0;
         private int _score = 0;
+        private int _bestScore;
         public MainPage()
         {
             InitializeComponent();
-            _questions.Add(new TrueFalseQuestion("Il C# è un linguaggio a oggetti?", 10, true));
-            _questions.Add(new TrueFalseQuestion("Python è un linguaggio compilato?", 10, false));
-            _questions.Add(new TrueFalseQuestion("√2 = 1.41421356236 ?", 20, false));
+            _questions.Add(new TrueFalseQuestion("Il C# è un linguaggio a oggetti?", 10, "true"));
+            _questions.Add(new TrueFalseQuestion("Python è un linguaggio compilato?", 10, "false"));
+            _questions.Add(new TrueFalseQuestion("√2 = 1.41421356236 ?", 20, "false"));
             ShowQuestion();
         }
         private void ShowQuestion()
@@ -25,17 +26,26 @@ namespace AppQuiz
             }
             else
             {
-                ScoreLabel.Text = $"Punti: {_score}";
+                /*ScoreLabel.Text = $"Punti: {_score}";
                 QuestionTextLabel.Text = $"Fine! Punteggio finale: {_score}";
                 TrueButton.IsVisible = false;
-                FalseButton.IsVisible = false;
+                FalseButton.IsVisible = false;*/
+                OnQuizFinished();
             }
         }
     
         private async void OnAnswerClicked(object sender, EventArgs e)
         {
+            string userAnswer;
             var btn = (Button)sender;
-            bool userAnswer = bool.Parse(btn.CommandParameter.ToString());
+            if(btn.CommandParameter.ToString().Length > 0)
+            {
+                userAnswer = btn.CommandParameter.ToString();
+            }
+            else
+            {
+                userAnswer = 
+            }
 
             if (_questions[_currentIndex].CheckAnswer(userAnswer))
             {
@@ -48,6 +58,15 @@ namespace AppQuiz
             }
             _currentIndex++;
             ShowQuestion();
+        }
+
+        private async void OnQuizFinished()
+        {
+            if (_score > _bestScore)
+            {
+                _bestScore = _score;
+            }
+            await Navigation.PushAsync(new ResultPage(_score, _bestScore));
         }
     }
 

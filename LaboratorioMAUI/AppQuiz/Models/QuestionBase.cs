@@ -35,6 +35,6 @@ namespace AppQuiz.Models
             _points = points;
         }
 
-        public abstract bool CheckAnswer(bool userAnswer);
+        public abstract bool CheckAnswer(string userAnswer);
     }
 }
