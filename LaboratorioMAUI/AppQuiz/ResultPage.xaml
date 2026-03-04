@@ -11,6 +11,14 @@
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
                    TextColor="BlueViolet" />
+            <Entry x:Name="NameEntry"
+                   Text=""
+                   Placeholder="Scrivi il tuo nome..."
+                   HorizontalTextAlignment="Center"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   WidthRequest="300"
+                   TextColor="Black"/>
             <VerticalStackLayout Spacing="15">
                 <Label Text="Il tuo punteggio" 
                        FontSize="12"
@@ -25,7 +33,7 @@
                        TextColor="BlueViolet" />
             </VerticalStackLayout>
             <Label x:Name="BestScoreLabel"
-                   Text="Miglior Punteggio: 0"
+                   Text="BEST: - | - | -"
                    FontSize="18"
                    HorizontalOptions="Center"
                    TextColor="Goldenrod" />

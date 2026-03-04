@@ -7,13 +7,16 @@ namespace AppQuiz
         private List<QuestionBase> _questions = new List<QuestionBase>();
         private int _currentIndex = 0;
         private int _score = 0;
-        private int _bestScore;
+        private int _best;
+        private string filePath = Path.Combine(
+                FileSystem.AppDataDirectory, "bestscore.txt");
+
         public MainPage()
         {
             InitializeComponent();
             _questions.Add(new TrueFalseQuestion("Il C# è un linguaggio a oggetti?", 10, "true"));
             _questions.Add(new TrueFalseQuestion("Python è un linguaggio compilato?", 10, "false"));
-            _questions.Add(new TrueFalseQuestion("√2 = 1.41421356236 ?", 20, "false"));
+            _questions.Add(new OpenQuestion("2 + 2 = ...", 5, "4"));
             ShowQuestion();
         }
         private void ShowQuestion()
@@ -21,15 +24,21 @@ namespace AppQuiz
             if (_currentIndex < _questions.Count)
             {
                 QuestionBase current = _questions[_currentIndex];
+                if (current.GetType() == typeof(TrueFalseQuestion))
+                {
+                    OpenAnswer.IsVisible = false;
+                    TrueFalseAnswer.IsVisible = true;
+                }
+                else if (current.GetType() == typeof(OpenQuestion))
+                {
+                    TrueFalseAnswer.IsVisible = false;
+                    OpenAnswer.IsVisible = true;
+                }
                 QuestionTextLabel.Text = current.Text;
                 ScoreLabel.Text = $"Punti: {_score}";
             }
             else
             {
-                /*ScoreLabel.Text = $"Punti: {_score}";
-                QuestionTextLabel.Text = $"Fine! Punteggio finale: {_score}";
-                TrueButton.IsVisible = false;
-                FalseButton.IsVisible = false;*/
                 OnQuizFinished();
             }
         }
@@ -38,13 +47,13 @@ namespace AppQuiz
         {
             string userAnswer;
             var btn = (Button)sender;
-            if(btn.CommandParameter.ToString().Length > 0)
+            if(btn.CommandParameter.ToString().Equals("Open"))
             {
-                userAnswer = btn.CommandParameter.ToString();
+                userAnswer = QuestionTextEntry.Text;
             }
             else
             {
-                userAnswer = 
+                userAnswer = btn.CommandParameter.ToString();
             }
 
             if (_questions[_currentIndex].CheckAnswer(userAnswer))
@@ -62,11 +71,7 @@ namespace AppQuiz
 
         private async void OnQuizFinished()
         {
-            if (_score > _bestScore)
-            {
-                _bestScore = _score;
-            }
-            await Navigation.PushAsync(new ResultPage(_score, _bestScore));
+            await Navigation.PushAsync(new ResultPage(_score));
         }
     }
 

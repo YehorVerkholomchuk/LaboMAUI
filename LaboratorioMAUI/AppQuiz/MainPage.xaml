@@ -24,7 +24,7 @@
                        HorizontalOptions="Center"
                        TextColor="Black" />
             </VerticalStackLayout>
-            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+            <HorizontalStackLayout x:Name="TrueFalseAnswer" Spacing="20" HorizontalOptions="Center" IsVisible="True">
                 <Button x:Name="TrueButton"
                         Text="VERO"
                         Clicked="OnAnswerClicked"
@@ -45,8 +45,25 @@
                         BackgroundColor="#c0392b"
                         CornerRadius="10" />
             </HorizontalStackLayout>
-            <Entry
-                />
+            <VerticalStackLayout x:Name="OpenAnswer" Spacing="15" IsVisible="True">
+                <Entry x:Name="QuestionTextEntry"
+                       Text=""
+                       Placeholder="Scrivi la risposta..."
+                       HorizontalTextAlignment="Center"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       WidthRequest="300"
+                       TextColor="Black"/>
+                <Button x:Name="ConfirmButton"
+                        Text="Conferma"
+                        Clicked="OnAnswerClicked"
+                        CommandParameter="Open"
+                        WidthRequest="300"
+                        HeightRequest="60"
+                        FontSize="18"
+                        BackgroundColor="BlueViolet"
+                        CornerRadius="10" />
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 
