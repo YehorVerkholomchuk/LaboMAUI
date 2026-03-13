@@ -7,9 +7,7 @@ namespace AppQuiz
         private List<QuestionBase> _questions = new List<QuestionBase>();
         private int _currentIndex = 0;
         private int _score = 0;
-        private int _best;
-        private string filePath = Path.Combine(
-                FileSystem.AppDataDirectory, "bestscore.txt");
+        private string filePath = Path.Combine(FileSystem.AppDataDirectory, "bestscore.txt");
 
         public MainPage()
         {

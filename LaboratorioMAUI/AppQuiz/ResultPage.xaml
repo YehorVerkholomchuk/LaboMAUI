@@ -33,7 +33,7 @@
                        TextColor="BlueViolet" />
             </VerticalStackLayout>
             <Label x:Name="BestScoreLabel"
-                   Text="BEST: - | - | -"
+                   Text="BEST: -;-;-"
                    FontSize="18"
                    HorizontalOptions="Center"
                    TextColor="Goldenrod" />

@@ -1,5 +1,3 @@
-using Java.Util;
-
 namespace AppQuiz;
 
 public partial class ResultPage : ContentPage
@@ -11,9 +9,9 @@ public partial class ResultPage : ContentPage
 	{
 		InitializeComponent();
 		_score = score;
-        SaveBestScore(_score);
+        SaveBest(_score);
 		ScoreLabel.Text = _score.ToString();
-        BestScoreLabel.Text = "Miglior Punteggio: " + LoadBestScore().ToString();
+        BestScoreLabel.Text = "BEST: " + LoadBest();
     }
 
     private async void OnReplayClicked(object sender, EventArgs e)
@@ -23,53 +21,62 @@ public partial class ResultPage : ContentPage
 
     private void SaveBest(int score)
     {
-        filePath = Path.Combine(
-            FileSystem.AppDataDirectory, "bestscore.txt");
+        filePath = Path.Combine(FileSystem.AppDataDirectory, "bestscore.txt");
+        int bestNew;
+        int bestCheck;
 
-        int best = LoadBest();
+        if (LoadBest() != null)
+        {
+            bestNew = int.Parse(LoadBest().Split(';')[1]);
+        }
+        else
+        {
+            bestNew = 0;    
+        }
 
-        if (score > best)
+        if (score > bestNew)
         {
             try
             {
-                content = NameEntry.Text + " | " + score.ToString() + " | " + DateTime.Now;
+                content = NameEntry.Text + ";" + score.ToString() + ";" + DateTime.Now.ToString("d");
                 File.WriteAllText(filePath, content);
+                BestScoreLabel.Text = "BEST: " + LoadBest();
             }
             catch (Exception ex)
             {
-                DisplayAlert("Errore",
-                    "Impossibile salvare: " + ex.Message, "OK");
+                DisplayAlert("Errore", "Impossibile salvare: " + ex.Message, "OK");
             }
         }
     }
 
-    private int LoadBest()
+    private string? LoadBest()
     {
         if (!File.Exists(filePath))
         {
-            return 0;
+            File.WriteAllText(filePath, "");
+            content = "User;0;" + DateTime.Now.ToString("d");
         }
 
         try
         {
             content = File.ReadAllText(filePath);
-            //trim content for name + score + date and overwrite
-            int best;
+            int bestNew;
+            DateTime dateNew;
 
-            if (int.TryParse(content, out best))
+            if (int.TryParse(content.Split(';')[1], out bestNew) && DateTime.TryParse(content.Split(';')[2], out dateNew))
             {
-                return best;
+                return content;
             }
             else
             {
                 DisplayAlert("Errore", "Valore non valido nel file", "OK");
-                return 0;
+                return null;
             }
         }
         catch (Exception ex)
         {
             DisplayAlert("Errore", "Lettura fallita" + ex.Message, "OK");
-            return 0;
+            return null;
         }
     }
 }
