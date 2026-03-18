@@ -3,8 +3,8 @@ namespace AppQuiz;
 public partial class ResultPage : ContentPage
 {
 	private int _score;
-    string filePath;
-    string content;
+    private string scorePath;
+    private string content;
     public ResultPage(int score)
 	{
 		InitializeComponent();
@@ -16,30 +16,33 @@ public partial class ResultPage : ContentPage
 
     private async void OnReplayClicked(object sender, EventArgs e)
     {
+        SaveBest(_score);
         await Navigation.PushAsync(new MainPage());
     }
 
     private void SaveBest(int score)
     {
-        filePath = Path.Combine(FileSystem.AppDataDirectory, "bestscore.txt");
+        scorePath = Path.Combine(FileSystem.AppDataDirectory, "bestscore.txt");
         int bestNew;
-        int bestCheck;
+        string bestName;
 
         if (LoadBest() != null)
         {
+            bestName = NameEntry.Text;
             bestNew = int.Parse(LoadBest().Split(';')[1]);
         }
         else
         {
-            bestNew = 0;    
+            bestNew = 0;
+            bestName = "?";
         }
 
-        if (score > bestNew)
+        if (score >= bestNew)
         {
             try
             {
-                content = NameEntry.Text + ";" + score.ToString() + ";" + DateTime.Now.ToString("d");
-                File.WriteAllText(filePath, content);
+                content = bestName + ";" + score.ToString() + ";" + DateTime.Now.ToString("d");
+                File.WriteAllText(scorePath, content);
                 BestScoreLabel.Text = "BEST: " + LoadBest();
             }
             catch (Exception ex)
@@ -51,15 +54,15 @@ public partial class ResultPage : ContentPage
 
     private string? LoadBest()
     {
-        if (!File.Exists(filePath))
+        if (!File.Exists(scorePath))
         {
-            File.WriteAllText(filePath, "");
-            content = "User;0;" + DateTime.Now.ToString("d");
+            File.WriteAllText(scorePath, "");
+            content = "?;0;?";
         }
 
         try
         {
-            content = File.ReadAllText(filePath);
+            content = File.ReadAllText(scorePath);
             int bestNew;
             DateTime dateNew;
 

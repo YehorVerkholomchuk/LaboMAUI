@@ -16,10 +16,14 @@ namespace AppQuiz.Models
             set { _correctAnswer = value; }
         }
 
-        public OpenQuestion(string text, int points, string correctAnswer)
+        public OpenQuestion(string text, int points, string correctAnswer, string image)
             : base(text, points)
         {
             _correctAnswer = correctAnswer;
+        }
+
+        public OpenQuestion(string v1, string v2, string v3, string v4)
+        {
         }
 
         public override bool CheckAnswer(string userAnswer)

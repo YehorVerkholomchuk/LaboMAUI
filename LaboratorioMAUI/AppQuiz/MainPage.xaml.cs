@@ -7,15 +7,49 @@ namespace AppQuiz
         private List<QuestionBase> _questions = new List<QuestionBase>();
         private int _currentIndex = 0;
         private int _score = 0;
-        private string filePath = Path.Combine(FileSystem.AppDataDirectory, "bestscore.txt");
+        private string content;
+        private string question;
+        private string[] questionContent;
+        private string questionPath = Path.Combine(FileSystem.AppDataDirectory, "domande.txt");
 
         public MainPage()
         {
             InitializeComponent();
-            _questions.Add(new TrueFalseQuestion("Il C# è un linguaggio a oggetti?", 10, "true"));
-            _questions.Add(new TrueFalseQuestion("Python è un linguaggio compilato?", 10, "false"));
-            _questions.Add(new OpenQuestion("2 + 2 = ...", 5, "4"));
             ShowQuestion();
+        }
+
+        private void LoadQuestions()
+        {
+            if (!File.Exists(questionPath))
+            {
+                File.WriteAllText(questionPath, "");
+            }
+
+            try
+            {
+                content = File.ReadAllText(questionPath);
+                for (int i = 0; i < content.Split('/').Length; i++)
+                {
+                    question = content.Split("/")[i];
+                    questionContent = question.Split(';');
+                    if (question.StartsWith("TF"))
+                    {
+                        _questions.Add(new TrueFalseQuestion(questionContent[1], questionContent[2], questionContent[3], questionContent[4]));
+                    }
+                    else if (question.StartsWith("OPEN"))
+                    {
+                        _questions.Add(new OpenQuestion(questionContent[1], questionContent[2], questionContent[3], questionContent[4]));
+                    }
+                    else
+                    {
+                        DisplayAlert("Errore", "Domanda invalida", "OK");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Errore", "Lettura fallita" + ex.Message, "OK");
+            }
         }
         private void ShowQuestion()
         {
