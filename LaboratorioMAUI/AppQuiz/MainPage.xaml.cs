@@ -15,6 +15,7 @@ namespace AppQuiz
         public MainPage()
         {
             InitializeComponent();
+            LoadQuestions();
             ShowQuestion();
         }
 
@@ -34,11 +35,11 @@ namespace AppQuiz
                     questionContent = question.Split(';');
                     if (question.StartsWith("TF"))
                     {
-                        _questions.Add(new TrueFalseQuestion(questionContent[1], questionContent[2], questionContent[3], questionContent[4]));
+                        _questions.Add(new TrueFalseQuestion(questionContent[1], int.Parse(questionContent[2]), questionContent[3], questionContent[4]));
                     }
                     else if (question.StartsWith("OPEN"))
                     {
-                        _questions.Add(new OpenQuestion(questionContent[1], questionContent[2], questionContent[3], questionContent[4]));
+                        _questions.Add(new OpenQuestion(questionContent[1], int.Parse(questionContent[2]), questionContent[3], questionContent[4]));
                     }
                     else
                     {

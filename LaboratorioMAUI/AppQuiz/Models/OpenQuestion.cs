@@ -22,10 +22,6 @@ namespace AppQuiz.Models
             _correctAnswer = correctAnswer;
         }
 
-        public OpenQuestion(string v1, string v2, string v3, string v4)
-        {
-        }
-
         public override bool CheckAnswer(string userAnswer)
         {
             return userAnswer.Equals(_correctAnswer);

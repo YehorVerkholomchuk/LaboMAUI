@@ -23,10 +23,6 @@ namespace AppQuiz.Models
             _correctAnswer = correctAnswer;
         }
 
-        public TrueFalseQuestion(string v1, string v2, string v3, string v4)
-        {
-        }
-
         public override bool CheckAnswer(string userAnswer)
         {
             return bool.Parse(userAnswer.ToString()) == bool.Parse(_correctAnswer.ToString());

@@ -5,6 +5,7 @@ public partial class ResultPage : ContentPage
 	private int _score;
     private string scorePath;
     private string content;
+    private string bestName;
     public ResultPage(int score)
 	{
 		InitializeComponent();
@@ -16,6 +17,12 @@ public partial class ResultPage : ContentPage
 
     private async void OnReplayClicked(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(NameEntry.Text))
+        {
+            await DisplayAlert("Errore", "Inserisci un nome!", "OK");
+            return;
+        }
+
         SaveBest(_score);
         await Navigation.PushAsync(new MainPage());
     }
@@ -23,18 +30,13 @@ public partial class ResultPage : ContentPage
     private void SaveBest(int score)
     {
         scorePath = Path.Combine(FileSystem.AppDataDirectory, "bestscore.txt");
-        int bestNew;
-        string bestName;
+        int bestNew = 0;
+        string? data = LoadBest();
 
-        if (LoadBest() != null)
+        if (data != null)
         {
             bestName = NameEntry.Text;
-            bestNew = int.Parse(LoadBest().Split(';')[1]);
-        }
-        else
-        {
-            bestNew = 0;
-            bestName = "?";
+            bestNew = int.Parse(data.Split(';')[1]);
         }
 
         if (score >= bestNew)
@@ -43,7 +45,7 @@ public partial class ResultPage : ContentPage
             {
                 content = bestName + ";" + score.ToString() + ";" + DateTime.Now.ToString("d");
                 File.WriteAllText(scorePath, content);
-                BestScoreLabel.Text = "BEST: " + LoadBest();
+                BestScoreLabel.Text = "BEST: " + content;
             }
             catch (Exception ex)
             {
@@ -56,8 +58,8 @@ public partial class ResultPage : ContentPage
     {
         if (!File.Exists(scorePath))
         {
-            File.WriteAllText(scorePath, "");
             content = "?;0;?";
+            File.WriteAllText(scorePath, content);
         }
 
         try
